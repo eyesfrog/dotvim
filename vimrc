@@ -98,6 +98,9 @@ set completeopt-=preview
 let g:ycm_min_num_of_chars_for_completion=1
 let g:ycm_cache_omnifunc=0
 let g:ycm_seed_identifiers_with_syntax=1
+nnoremap <leader>jd :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>je :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 Plugin 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
@@ -115,6 +118,7 @@ Plugin 'honza/vim-snippets'
 Plugin 'majutsushi/tagbar'
 let tagbar_right=1 
 nnoremap <Leader>tl :TagbarToggle<CR> 
+let g:tagbar_compact=1
 
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'vim-scripts/paredit.vim'
@@ -139,10 +143,10 @@ Plugin 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_enable_on_vim_startup=1
 let g:indent_guides_start_level=2
 let g:indent_guides_guide_size=1
+:nmap <silent> <Leader>i <Plug>IndentGuidesToggle
 
 Plugin 'vim-easymotion'
 Plugin 'kien/ctrlp.vim'
-Plugin 'godlygeek/tabular'
 
 
 call vundle#end()
