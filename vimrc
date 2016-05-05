@@ -102,9 +102,10 @@ nnoremap <leader>jd :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>je :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 let g:airline_powerline_fonts = 1
-let g:airline_theme="tomorrow"
+let g:airline_theme="wombat"
 
 Plugin 'edkolev/tmuxline.vim'
 let g:tmuxline_powerline_separators = 0
@@ -141,13 +142,10 @@ nmap <Leader>tr :NERDTreeToggle<CR>
 
 Plugin 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_enable_on_vim_startup=1
+set ts=4 sw=4 et
 let g:indent_guides_start_level=2
 let g:indent_guides_guide_size=1
 :nmap <silent> <Leader>i <Plug>IndentGuidesToggle
-
-Plugin 'vim-easymotion'
-Plugin 'kien/ctrlp.vim'
-
 
 call vundle#end()
 
