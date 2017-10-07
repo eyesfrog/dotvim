@@ -1,4 +1,4 @@
-call plug#begin('~/.config/nvim/plug')
+call plug#begin('~/.vim/plug')
 
 Plug 'Valloric/YouCompleteMe'
 let g:ycm_global_ycm_extra_conf = '/Users/eyefrog/.config/nvim/plug/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
@@ -13,7 +13,10 @@ nnoremap <leader>gd :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 let g:ycm_python_binary_path = '/usr/bin/python3'
+let g:ycm_semantic_triggers = {'haskell' : ['.']}
 
+Plug 'w0rp/ale'
+Plug 'python-mode/python-mode'
 
 Plug 'morhetz/gruvbox'
 let g:gruvbox_italic=1
@@ -22,6 +25,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline_powerline_fonts = 1
 let g:airline_theme="tomorrow"
+
 
 Plug 'edkolev/tmuxline.vim'
 let g:tmuxline_powerline_separators = 0
@@ -44,12 +48,6 @@ Plug 'Mizuchi/STL-Syntax'
 Plug 'vim-scripts/a.vim'
 Plug 'lervag/vimtex'
 
-
-" *.cpp 和 *.h 间切换
-nmap <Leader>ch :A<CR>
-" 子窗口中显示 *.cpp 或 *.h
-nmap <Leader>sch :AS<CR>
-
 Plug 'sjl/tslime.vim'
 let g:tslime_ensure_trailing_newlines = 1
 let g:tslime_normal_mapping = '<leader>t'
@@ -63,38 +61,47 @@ Plug 'Yggdroot/indentLine'
 
 Plug 'chilicuil/vim-sml-coursera'
 
+Plug 'eagletmt/neco-ghc'
+
+Plug 'ryanoasis/vim-devicons'
+
 call plug#end()
 
 "Basic
-color gruvbox
 set nocompatible
-set guifont=Inconsolata\ for\ Powerline:h22
+color gruvbox
+set guifont=DejaVu\ Sans\ Mono\ Nerd\ Font\ Complete\ Mono:h18
 set background=dark
 set number
-set smartindent
+set relativenumber
+set backspace=indent,eol,start
+set mouse=a
 set expandtab
-set laststatus=2
 set ruler
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
-set incsearch
-set hlsearch
-set cursorline
-set history=1000
-set encoding=utf-8
-set fileencodings=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936,utf-16,big5,euc-jp,latin1
+set laststatus=2
+set scrolloff=7
 set ignorecase
-set gcr=a:block-blinkon0
 set foldmethod=syntax
-set shell=bash\ -l
 set nofoldenable
-let g:rehash256 = 1
+let g:rehash256=1
+set fileencodings=utf-8,chinese,latin1
+set encoding=utf8
+set wildmenu
+set cursorline
+set gcr=a:block-blinkon0
+
 
 " No backup files
 set nobackup
 set nowritebackup
 set noswapfile
+
+syntax on
+syntax enable
+filetype plugin indent on
 
 " SICP
 autocmd filetype lisp,scheme,art setlocal equalprg=scmindent.rkt
@@ -117,36 +124,3 @@ func! CompileRunCpp()
     exec "!clang++ % -o %<"
     exec "! ./%<"
 endfunc
-
-" 替换函数。参数说明：
-" confirm：是否替换前逐一确认
-" wholeword：是否整词匹配
-" replace：被替换字符串
-function! Replace(confirm, wholeword, replace)
-    wa
-    let flag = ''
-    if a:confirm
-        let flag .= 'gec'
-    else
-        let flag .= 'ge'
-    endif
-    let search = ''
-    if a:wholeword
-        let search .= '\<' . escape(expand('<cword>'), '/\.*$^~[') . '\>'
-    else
-        let search .= expand('<cword>')
-    endif
-    let replace = escape(a:replace, '/\&~')
-    execute 'argdo %s/' . search . '/' . replace . '/' . flag . '| update'
-endfunction
-" 不确认、非整词
-nnoremap <Leader>R :call Replace(0, 0, input('Replace '.expand('<cword>').' with: '))<CR>
-" 不确认、整词
-nnoremap <Leader>rw :call Replace(0, 1, input('Replace '.expand('<cword>').' with: '))<CR>
-" 确认、非整词
-nnoremap <Leader>rc :call Replace(1, 0, input('Replace '.expand('<cword>').' with: '))<CR>
-" 确认、整词
-nnoremap <Leader>rcw :call Replace(1, 1, input('Replace '.expand('<cword>').' with: '))<CR>
-nnoremap <Leader>rwc :call Replace(1, 1, input('Replace '.expand('<cword>').' with: '))<CR>
-
-
